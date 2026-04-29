@@ -7,11 +7,16 @@
     "ready": "vp check && vp run -r test && vp run -r build",
     "prepare": "vp config",
     "dev:api": "vp run cloudflare-worker-template#dev",
+    "dev:web": "vp run react-router-template#dev",
     "api:db:migrate:local": "vp run cloudflare-worker-template#db:migrate:local",
     "api:db:migrate:staging": "vp run cloudflare-worker-template#db:migrate:staging",
     "api:deploy:staging:db:migrate": "vp run cloudflare-worker-template#deploy:staging:db:migrate",
     "api:deploy:staging:manual": "vp run cloudflare-worker-template#deploy:staging:manual",
-    "api:deploy:staging": "vp run cloudflare-worker-template#deploy:staging"
+    "api:deploy:staging": "vp run cloudflare-worker-template#deploy:staging",
+    "web:build": "vp run react-router-template#build",
+    "web:create:initial": "vp run react-router-template#create:initial",
+    "web:deploy:staging:manual": "vp run react-router-template#deploy:staging:manual",
+    "web:deploy:staging": "vp run react-router-template#deploy:staging"
   },
   "devDependencies": {
     "vite-plus": "catalog:"

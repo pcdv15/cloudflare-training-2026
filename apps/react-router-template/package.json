@@ -5,6 +5,9 @@
   "scripts": {
     "build": "react-router build",
     "dev": "react-router dev",
+    "create:initial": "npx wrangler pages project create react-router-template-staging --production-branch develop --env-file ../../.env.local",
+    "deploy:staging:manual": "pnpx wrangler pages deploy build/client --project-name react-router-template-staging --env-file ../../.env.local",
+    "deploy:staging": "pnpx wrangler pages deploy build/client --project-name react-router-template-staging --branch develop",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc"
   },
