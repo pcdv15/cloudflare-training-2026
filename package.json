@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "ready": "vp check && vp run -r test && vp run -r build",
-    "prepare": "vp config"
+    "prepare": "vp config",
+    "dev:api": "vp run cloudflare-worker-template#dev",
+    "api:db:migrate:local": "vp run cloudflare-worker-template#db:migrate:local"
   },
   "devDependencies": {
     "vite-plus": "catalog:"
