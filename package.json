@@ -9,7 +9,9 @@
     "dev:api": "vp run cloudflare-worker-template#dev",
     "api:db:migrate:local": "vp run cloudflare-worker-template#db:migrate:local",
     "api:db:migrate:staging": "vp run cloudflare-worker-template#db:migrate:staging",
-    "api:deploy:staging:db:migrate": "vp run cloudflare-worker-template#deploy:staging:db:migrate"
+    "api:deploy:staging:db:migrate": "vp run cloudflare-worker-template#deploy:staging:db:migrate",
+    "api:deploy:staging:manual": "vp run cloudflare-worker-template#deploy:staging:manual",
+    "api:deploy:staging": "vp run cloudflare-worker-template#deploy:staging"
   },
   "devDependencies": {
     "vite-plus": "catalog:"

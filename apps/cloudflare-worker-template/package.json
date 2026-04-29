@@ -3,7 +3,8 @@
   "type": "module",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy --minify",
+    "deploy:staging:manual": "wrangler deploy --minify --env staging --env-file ../../.env.local",
+    "deploy:staging": "wrangler deploy --minify --env staging",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings",
     "db:migrate:local": "wrangler d1 migrations apply test_db --local",
     "db:migrate:staging": "wrangler d1 migrations apply test_db_staging --remote --env staging --env-file ../../.env.local",
