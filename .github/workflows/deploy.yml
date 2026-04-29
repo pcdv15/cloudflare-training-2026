@@ -1,0 +1,71 @@
+name: Deploy to staging
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect app changes
+        id: changes
+        run: |
+          if git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -q '^apps/cloudflare-worker-template/'; then
+            echo "api_changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "api_changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          if git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -q '^apps/react-router-template/'; then
+            echo "web_changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "web_changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Setup Vite+
+        if: steps.changes.outputs.api_changed == 'true' ||
+          steps.changes.outputs.web_changed == 'true'
+        uses: voidzero-dev/setup-vp@v1
+        with:
+          node-version: "22"
+          cache: true
+
+      - name: Install dependencies
+        if: steps.changes.outputs.api_changed == 'true' ||
+          steps.changes.outputs.web_changed == 'true'
+        run: vp install
+
+      - name: Run staging migrations
+        if: steps.changes.outputs.api_changed == 'true'
+        run: vp run --no-cache api:deploy:staging:db:migrate
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Deploy API to staging
+        if: steps.changes.outputs.api_changed == 'true'
+        run: vp run --no-cache api:deploy:staging
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Build web
+        if: steps.changes.outputs.web_changed == 'true'
+        run: vp run --no-cache web:build
+        env:
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+
+      - name: Deploy web to Cloudflare Pages
+        if: steps.changes.outputs.web_changed == 'true'
+        run: vp run --no-cache web:deploy:staging
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
