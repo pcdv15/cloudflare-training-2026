@@ -5,7 +5,9 @@
     "dev": "wrangler dev",
     "deploy": "wrangler deploy --minify",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings",
-    "db:migrate:local": "wrangler d1 migrations apply test_db --local"
+    "db:migrate:local": "wrangler d1 migrations apply test_db --local",
+    "db:migrate:staging": "wrangler d1 migrations apply test_db_staging --remote --env staging --env-file ../../.env.local",
+    "deploy:staging:db:migrate": "wrangler d1 migrations apply test_db_staging --remote --env staging"
   },
   "dependencies": {
     "@hono/swagger-ui": "^0.6.1",

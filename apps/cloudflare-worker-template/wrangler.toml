@@ -9,3 +9,14 @@ binding = "DB"
 database_name = "test_db"
 database_id = "xxxxxxxx-xxxxxxxxxx-xxxxxxx"
 migrations_dir = "drizzle"
+
+# --- STAGING ENVIRONMENT ---
+
+[env.staging]
+name = "cloudflare-worker-template-staging"
+
+[[env.staging.d1_databases]]
+binding = "DB"
+database_name = "test_db_staging"
+database_id = "c32ddb8d-7b40-4a2e-8b99-69967100fcb7"
+migrations_dir = "drizzle"
