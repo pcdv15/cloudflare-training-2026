@@ -16,7 +16,7 @@ export default function TodosRoute({ loaderData }: Route.ComponentProps) {
         <p className="text-sm text-gray-600">Route: /todos</p>
         <h1 className="text-3xl font-semibold">Todos</h1>
         <p className="text-base text-gray-700">
-          This page lists todos from the API and shows nested route content.
+          Hello! This page lists todos from the API and shows nested route content.
         </p>
       </header>
 
