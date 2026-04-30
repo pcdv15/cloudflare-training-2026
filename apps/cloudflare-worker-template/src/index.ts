@@ -16,7 +16,7 @@ app.doc("/doc", createSwaggerDocument());
 app.get("/api/docs", swaggerUI({ url: "/doc" }));
 
 app.get("/", (c) => {
-  return c.text("Hello Hono! x2");
+  return c.text("Hello Hono! From Paul");
 });
 
 app.route("/api/todos", todosRoutes);
